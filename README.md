@@ -1,4 +1,4 @@
-# Dynamic Programming for Sequences (DPS) Algorithms
+# Algorithms for Dynamic Programming
 
 ## Overview
 
