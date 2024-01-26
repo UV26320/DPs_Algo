@@ -9,8 +9,7 @@ private:
     {
 
         // base case
-        if (nums1.size() == index)
-            return 0;
+        if (nums1.size() == index) return 0;
 
         if (dp[index][swapped] != -1)
             return dp[index][swapped];
