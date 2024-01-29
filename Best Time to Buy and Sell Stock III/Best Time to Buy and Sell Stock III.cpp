@@ -1,10 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+class Solution
+{
 private:
-    int solve(int index, int buy, vector<int>& prices, int limit,
-              vector<vector<vector<int>>>& dp) {
+    int solve(int index, int buy, vector<int> &prices, int limit,
+              vector<vector<vector<int>>> &dp)
+    {
 
         // base case
         if (index == prices.size())
@@ -18,15 +20,17 @@ private:
 
         int profit = 0;
 
-        if (buy) {
+        if (buy)
+        {
 
             int buykaro =
                 -prices[index] + solve(index + 1, 0, prices, limit, dp);
             int ignorekaro = 0 + solve(index + 1, 1, prices, limit, dp);
 
             profit = max(buykaro, ignorekaro);
-
-        } else {
+        }
+        else
+        {
 
             int sellkro =
                 +prices[index] + solve(index + 1, 1, prices, limit - 1, dp);
@@ -38,36 +42,41 @@ private:
         return dp[index][buy][limit] = profit;
     }
 
-    int solveTab(vector<int>& prices) {
+    int solveTab(vector<int> &prices)
+    {
 
         int n = prices.size();
         vector<vector<vector<int>>> dp(
             n + 1, vector<vector<int>>(2, vector<int>(3, 0)));
 
-        for (int index = n - 1; index >= 0; --index) {
-            for (int buy = 0; buy <= 1; ++buy) {
-                for (int limit = 1; limit <= 2; ++limit) {
-                    
+        for (int index = n - 1; index >= 0; --index)
+        {
+            for (int buy = 0; buy <= 1; ++buy)
+            {
+                for (int limit = 1; limit <= 2; ++limit)
+                {
+
                     int profit = 0;
 
-                if (buy) {
+                    if (buy)
+                    {
 
-                    int buykaro =
-                        -prices[index] + dp[index + 1][0][limit];
-                    int ignorekaro = 0 + dp[index + 1][1][limit];
+                        int buykaro =
+                            -prices[index] + dp[index + 1][0][limit];
+                        int ignorekaro = 0 + dp[index + 1][1][limit];
 
-                    profit = max(buykaro, ignorekaro);
+                        profit = max(buykaro, ignorekaro);
+                    }
+                    else
+                    {
 
-                } else {
+                        int sellkro =
+                            +prices[index] + dp[index + 1][1][limit - 1];
+                        int ignorekaro = 0 + dp[index + 1][0][limit];
 
-                    int sellkro =
-                        +prices[index] + dp[index + 1][1][limit-1];
-                    int ignorekaro = 0 + dp[index + 1][0][limit];
-
-                    profit = max(sellkro, ignorekaro);
-                }
-                 dp[index][buy][limit] = profit;
-
+                        profit = max(sellkro, ignorekaro);
+                    }
+                    dp[index][buy][limit] = profit;
                 }
             }
         }
@@ -75,38 +84,42 @@ private:
         return dp[0][1][2];
     }
 
-    int solveSPO(vector<int>& prices) {
+    int solveSPO(vector<int> &prices)
+    {
 
         int n = prices.size();
-        
-        vector<vector<int>> curr( 2 ,vector<int>(3,0));
-        vector<vector<int>> next( 2 ,vector<int>(3,0));
 
+        vector<vector<int>> curr(2, vector<int>(3, 0));
+        vector<vector<int>> next(2, vector<int>(3, 0));
 
-        for (int index = n - 1; index >= 0; --index) {
-            for (int buy = 0; buy <= 1; ++buy) {
-                for (int limit = 1; limit <= 2; ++limit) {
-                    
+        for (int index = n - 1; index >= 0; --index)
+        {
+            for (int buy = 0; buy <= 1; ++buy)
+            {
+                for (int limit = 1; limit <= 2; ++limit)
+                {
+
                     int profit = 0;
 
-                if (buy) {
+                    if (buy)
+                    {
 
-                    int buykaro =
-                        -prices[index] + next[0][limit];
-                    int ignorekaro = 0 + next[1][limit];
+                        int buykaro =
+                            -prices[index] + next[0][limit];
+                        int ignorekaro = 0 + next[1][limit];
 
-                    profit = max(buykaro, ignorekaro);
+                        profit = max(buykaro, ignorekaro);
+                    }
+                    else
+                    {
 
-                } else {
+                        int sellkro =
+                            +prices[index] + next[1][limit - 1];
+                        int ignorekaro = 0 + next[0][limit];
 
-                    int sellkro =
-                        +prices[index] + next[1][limit-1];
-                    int ignorekaro = 0 + next[0][limit];
-
-                    profit = max(sellkro, ignorekaro);
-                }
-                 curr[buy][limit] = profit;
-
+                        profit = max(sellkro, ignorekaro);
+                    }
+                    curr[buy][limit] = profit;
                 }
             }
 
@@ -116,10 +129,9 @@ private:
         return next[1][2];
     }
 
-
-
- public:
-    int maxProfit(vector<int>& prices) {
+public:
+    int maxProfit(vector<int> &prices)
+    {
 
         // int n = prices.size();
         // vector<vector<vector<int>>> dp( n, vector<vector<int>>
